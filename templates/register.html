@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>إنشاء حساب</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.register-box {
+    background: white;
+    padding: 30px;
+    width: 320px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.register-box h2 {
+    text-align: center;
+    color: #1e3a8a;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.footer-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.footer-link a {
+    color: #2563eb;
+    text-decoration: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>إنشاء حساب جديد</h1>
+</header>
+
+<div class="container">
+    <form action="" method="post">
+    <div class="register-box">
+        <h2>Register</h2>
+
+        <div class="input-group">
+            <label>الاسم</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="input-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+            <label>كلمة المرور</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="input-group">
+            <label>تأكيد كلمة المرور</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+        <button onclick="register()" type="submit">إنشاء حساب</button>
+        </form>
+        <div class="error" id="errorMsg">{{errormsg}} </div>
+        <div class="success" id="successMsg">{{saccess}} </div>
+
+        <div class="footer-link">
+            <p>لديك حساب؟ <a href="{{url_for('login')}} ">تسجيل الدخول</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="script.js"></script> -->
+</body>
+</html>
+

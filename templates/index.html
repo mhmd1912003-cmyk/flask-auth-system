@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmBoo | دكتور الموبايلات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static' , filename='style.css')}}">
+</head>
+<body>
+
+<!-- ════ STORE PAGE ════ -->
+<div id="storePage" class="page active">
+
+<nav class="store-nav">
+  <a class="store-logo" href="#">
+    <svg class="logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="44" height="44" rx="12" fill="rgba(0,212,255,0.1)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+      <rect x="12" y="8" width="14" height="22" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+      <rect x="13.5" y="9.5" width="11" height="14" rx="1.5" fill="rgba(0,212,255,0.15)"/>
+      <circle cx="19" cy="26.5" r="1.2" fill="#00d4ff"/>
+      <path d="M20 14 C22 12 28 14 28 20 C28 26 22 30 22 30" stroke="#f5a623" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M23 16 C24.5 15 29 17 29 22 C29 27 25 30 25 30" stroke="#f5a623" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="30" cy="32" r="5" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+      <path d="M27.5 32 L29.2 33.8 L32.5 30" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-text"><span class="al">Em</span><span class="doctor">Boo</span></div>
+  </a>
+  <div class="nav-links">
+    <span class="nav-link active" onclick="scrollToSec('products-section')">الموبايلات</span>
+    <span class="nav-link" onclick="scrollToSec('wholesale-section')">للتجار</span>
+    <span class="nav-link" onclick="scrollToSec('whyus-section')">لماذا نحن؟</span>
+    <span class="nav-link" onclick="scrollToSec('footer-section')">تواصل معنا</span>
+  </div>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">🛒 السلة <span class="cart-count" id="cartCount">0</span></button>
+    <a class="admin-link" onclick="showLogin()">⚙️ الإدارة</a>
+    <button class="hamburger" id="hambBtn" onclick="toggleMobNav()" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav Drawer -->
+<div class="mob-nav" id="mobNav">
+  <div class="mob-nav-inner">
+    <div class="mnl" onclick="scrollToSec('products-section');closeMobNav()"><span class="mi">📱</span>الموبايلات</div>
+    <div class="mnl" onclick="scrollToSec('wholesale-section');closeMobNav()"><span class="mi">💼</span>للتجار والجملة</div>
+    <div class="mnl" onclick="scrollToSec('whyus-section');closeMobNav()"><span class="mi">⭐</span>لماذا نحن؟</div>
+    <div class="mnl" onclick="scrollToSec('footer-section');closeMobNav()"><span class="mi">📞</span>تواصل معنا</div>
+    <div class="mob-nav-divider"></div>
+    <button class="mob-admin-btn" onclick="showLogin();closeMobNav()"><span>⚙️</span>لوحة الإدارة</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> أفضل أسعار في السوق</div>
+    <h1>دكتور<br>الموبايلات<br><span class="highlight">EmBoo</span></h1>
+    <p>موبايلات جديدة ومستعملة بأسعار لا تُقارن. ضمان الجودة، خدمة ما بعد البيع، وأسعار خاصة للتجار والجملة.</p>
+    <div class="hero-actions">
+      <button class="btn-hero-primary" onclick="scrollToSec('products-section')">🛍️ تسوق دلوقتي</button>
+      <button class="btn-hero-secondary" onclick="scrollToSec('wholesale-section')">💼 أسعار التجار</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num" id="hStatTotal">0</div><div class="lbl">موبايل متاح</div></div>
+      <div class="hero-stat"><div class="num" id="hStatBrands">8</div><div class="lbl">ماركة عالمية</div></div>
+      <div class="hero-stat"><div class="num">100%</div><div class="lbl">ضمان الجودة</div></div>
+    </div>
+  </div>
+  <div class="hero-phones"><span>📱</span></div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands-section">
+  <div class="brands-bar">
+    <div class="brand-chip active" onclick="filterByBrand('',event)">الكل</div>
+    <div class="brand-chip" onclick="filterByBrand('Samsung',event)">📘 Samsung</div>
+    <div class="brand-chip" onclick="filterByBrand('iPhone',event)">🍎 iPhone</div>
+    <div class="brand-chip" onclick="filterByBrand('Huawei',event)">🌸 Huawei</div>
+    <div class="brand-chip" onclick="filterByBrand('Realme',event)">🟡 Realme</div>
+    <div class="brand-chip" onclick="filterByBrand('Xiaomi',event)">🔴 Xiaomi</div>
+    <div class="brand-chip" onclick="filterByBrand('Oppo',event)">🟢 Oppo</div>
+    <div class="brand-chip" onclick="filterByBrand('Vivo',event)">💜 Vivo</div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products-section">
+  <div class="sec-title">
+    <div class="tag">🛍️ المنتجات</div>
+    <h2>تشكيلة الموبايلات</h2>
+    <p>اختر من بين أحدث الموبايلات الجديدة والمستعملة بأفضل الأسعار</p>
+  </div>
+  <div class="filters-row">
+    <input type="text" class="filter-input filter-input-search" id="storeSearch" placeholder="🔍 ابحث باسم الموبايل..." oninput="renderStore()">
+    <select class="filter-input" id="storeCondition" onchange="renderStore()">
+      <option value="">جديد ومستعمل</option>
+      <option value="جديد">🆕 جديد فقط</option>
+      <option value="مستعمل">♻️ مستعمل فقط</option>
+    </select>
+    <select class="filter-input" id="storePriceSort" onchange="renderStore()">
+      <option value="">ترتيب السعر</option>
+      <option value="asc">من الأرخص للأغلى</option>
+      <option value="desc">من الأغلى للأرخص</option>
+    </select>
+  </div>
+  <div class="prod-grid" id="storeGrid"></div>
+</section>
+
+<!-- WHOLESALE -->
+<section class="wholesale-section" id="wholesale-section">
+  <div class="wholesale-inner">
+    <div class="wholesale-content">
+      <div class="tag" style="display:inline-block;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 15px;border-radius:20px;margin-bottom:20px">💼 للتجار والجملة</div>
+      <h2>أسعار خاصة<br>للتجار المحترفين</h2>
+      <p>لو بتشتري 5 موبايلات أو أكتر، هتاخد أسعار الجملة الخاصة بالتجار اللي هي أقل بكتير من أسعار الأفراد. سجل طلبك دلوقتي وهنتواصل معاك.</p>
+      <div class="wholesale-perks">
+        <div class="perk"><div class="perk-icon blue">💰</div>خصم يصل لـ 15% على أسعار الأفراد</div>
+        <div class="perk"><div class="perk-icon gold">📦</div>الحد الأدنى 5 موبايلات لأسعار الجملة</div>
+        <div class="perk"><div class="perk-icon green">🤝</div>أسعار ثابتة ومضمونة طول الموسم</div>
+        <div class="perk"><div class="perk-icon purple">⚡</div>توصيل أولوية وخدمة دعم مخصصة</div>
+      </div>
+    </div>
+    <div class="wholesale-form-card">
+      <h3>💼 اطلب أسعار الجملة</h3>
+      <p>املا النموذج وهنتواصل معاك خلال 24 ساعة</p>
+      <div class="wf-group"><label>الاسم الكامل</label><input type="text" id="wName" placeholder="اسمك"></div>
+      <div class="wf-group"><label>رقم الهاتف</label><input type="text" id="wPhone" placeholder="01xxxxxxxxx"></div>
+      <div class="wf-group"><label>اسم المحل / الشركة</label><input type="text" id="wBusiness" placeholder="اسم المحل أو الشركة"></div>
+      <div class="wf-group"><label>عدد الموبايلات المطلوبة</label><input type="number" id="wQty" placeholder="الحد الأدنى 5" min="5"></div>
+      <div class="wf-group"><label>الموبايلات المطلوبة</label><textarea id="wDetails" rows="3" placeholder="مثال: 3 Samsung A55 + 2 Xiaomi Note 13..."></textarea></div>
+      <button class="btn-wholesale" onclick="submitWholesale()">📨 إرسال الطلب</button>
+      <div id="wholesaleAlert"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="whyus-section" id="whyus-section">
+  <div class="sec-title">
+    <div class="tag">⭐ مميزاتنا</div>
+    <h2>ليه EmBoo؟</h2>
+    <p>مش بس تبيع موبايلات، إحنا بنقدم تجربة متكاملة</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(0,212,255,0.1)">🔍</div><h3>فحص دقيق لكل موبايل</h3><p>كل موبايل بيتفحص قبل البيع ومضمون 100% من أي عيوب مخفية</p></div>
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(245,166,35,0.1)">💰</div><h3>أفضل الأسعار في السوق</h3><p>بنوفرلك أسعار تنافسية لأننا بنتعامل مباشرة مع الموردين</p></div>
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(16,185,129,0.1)">🔄</div><h3>ضمان الاسترجاع 7 أيام</h3><p>مش عاجبك؟ رجّعه خلال 7 أيام وهنرد فلوسك كاملة بدون أسئلة</p></div>
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(139,92,246,0.1)">🚚</div><h3>توصيل سريع</h3><p>توصيل لكل محافظات مصر خلال 24-48 ساعة من تأكيد الطلب</p></div>
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(249,115,22,0.1)">💼</div><h3>أسعار جملة للتجار</h3><p>تاجر أو بائع؟ هتلاقي أسعار خاصة تناسب أعمالك وتزود ربحك</p></div>
+    <div class="feature-card"><div class="feature-icon" style="background:rgba(239,68,68,0.1)">🛠️</div><h3>دعم ما بعد البيع</h3><p>فريق دعم متاح 7 أيام في الأسبوع لحل أي مشكلة بعد الشراء</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="store-footer" id="footer-section">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px">
+        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;flex-shrink:0">
+          <rect width="44" height="44" rx="12" fill="rgba(0,212,255,0.1)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+          <rect x="12" y="8" width="14" height="22" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+          <rect x="13.5" y="9.5" width="11" height="14" rx="1.5" fill="rgba(0,212,255,0.15)"/>
+          <circle cx="19" cy="26.5" r="1.2" fill="#00d4ff"/>
+          <path d="M20 14 C22 12 28 14 28 20 C28 26 22 30 22 30" stroke="#f5a623" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="30" cy="32" r="5" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+          <path d="M27.5 32 L29.2 33.8 L32.5 30" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="logo-text"><span class="al">Em</span><span class="doctor">Boo</span></div>
+      </div>
+      <p>المتجر الأول لبيع الموبايلات الجديدة والمستعملة. جودة مضمونة، أسعار منافسة، وخدمة احترافية.</p>
+    </div>
+    <div class="footer-col">
+      <h4>الموبايلات</h4>
+      <a onclick="filterByBrand('Samsung',event);scrollToSec('products-section')">Samsung</a>
+      <a onclick="filterByBrand('iPhone',event);scrollToSec('products-section')">iPhone</a>
+      <a onclick="filterByBrand('Huawei',event);scrollToSec('products-section')">Huawei</a>
+      <a onclick="filterByBrand('Realme',event);scrollToSec('products-section')">Realme</a>
+      <a onclick="filterByBrand('Xiaomi',event);scrollToSec('products-section')">Xiaomi</a>
+    </div>
+    <div class="footer-col">
+      <h4>روابط مهمة</h4>
+      <a onclick="scrollToSec('products-section')">تسوق الآن</a>
+      <a onclick="scrollToSec('wholesale-section')">أسعار التجار</a>
+      <a onclick="scrollToSec('whyus-section')">لماذا نحن؟</a>
+      <a onclick="showLogin()">لوحة الإدارة</a>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <a>📞 01000000000</a>
+      <a>📧 info@emboo.com</a>
+      <a>📍 مصر</a>
+      <div class="socials" style="margin-top:10px">
+        <div class="social-btn">📘</div>
+        <div class="social-btn">📷</div>
+        <div class="social-btn">💬</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 EmBoo | دكتور الموبايلات - جميع الحقوق محفوظة</span>
+    <span>صُنع بـ ❤️ في مصر</span>
+  </div>
+</footer>
+</div><!-- /storePage -->
+
+<!-- STICKY CONTACT -->
+<div class="sticky-contact" id="stickyContact">
+  <a class="sticky-contact-btn whatsapp" href="https://wa.me/201094918310" target="_blank">
+    <span class="scb-icon">💬</span><span class="scb-label">واتساب</span>
+  </a>
+  <a class="sticky-contact-btn phone" href="tel:01000000000">
+    <span class="scb-icon">📞</span><span class="scb-label">اتصل بنا</span>
+  </a>
+</div>
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="رجوع للأعلى">↑</button>
+
+<!-- CART SIDEBAR -->
+<div class="cart-backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head"><h3>🛒 سلة المشتريات</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot">
+    <div class="cart-total"><span>الإجمالي</span><strong id="cartTotal">0 ج.م</strong></div>
+    <button class="btn-checkout" onclick="openOrderModal()">✅ تأكيد الطلب</button>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="prod-modal" id="prodModal">
+  <div class="prod-modal-bg" onclick="closeProdModal()"></div>
+  <div class="prod-modal-box" id="prodModalBox"></div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="order-modal" id="orderModal">
+  <div class="order-modal-bg" onclick="closeOrderModal()"></div>
+  <div class="order-box">
+    <div class="ob-head"><h3>📋 تأكيد الطلب</h3><button class="modal-close-x" onclick="closeOrderModal()">✕</button></div>
+    <div class="ob-body">
+      <div class="ob-summary" id="obSummary"></div>
+      <div class="wf-group"><label>الاسم</label><input type="text" id="obName" placeholder="اسمك الكامل"></div>
+      <div class="wf-group"><label>رقم الهاتف</label><input type="text" id="obPhone" placeholder="01xxxxxxxxx"></div>
+      <div class="wf-group"><label>العنوان</label><input type="text" id="obAddress" placeholder="عنوان التوصيل"></div>
+      <div class="wf-group"><label>ملاحظات</label><textarea id="obNotes" rows="2" placeholder="أي ملاحظات إضافية..."></textarea></div>
+      <button class="btn-wholesale" onclick="submitOrder()" style="margin-top:5px">🚀 إرسال الطلب</button>
+      <div id="orderAlert"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ LOGIN PAGE ════ -->
+<div id="loginPage" class="page">
+  <div class="login-card">
+    <div class="login-logo-wrap">
+      <svg class="big-logo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="80" height="80" rx="22" fill="rgba(0,212,255,0.08)" stroke="rgba(0,212,255,0.25)" stroke-width="1.5"/>
+        <rect x="22" y="14" width="26" height="40" rx="5" fill="none" stroke="#00d4ff" stroke-width="2"/>
+        <rect x="25" y="18" width="20" height="26" rx="3" fill="rgba(0,212,255,0.12)"/>
+        <circle cx="35" cy="49" r="2.5" fill="#00d4ff"/>
+        <path d="M37 26 C41 22 52 27 52 37 C52 47 42 54 42 54" stroke="#f5a623" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="56" cy="58" r="9" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="2"/>
+        <path d="M51 58 L54.5 61.5 L61 55" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1>EmBoo</h1>
+      <p>لوحة تحكم الإدارة</p>
+    </div>
+    <div class="login-field"><label>اسم المستخدم</label><input type="text" id="loginUser" placeholder="admin" autocomplete="off"></div>
+    <div class="login-field"><label>كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••"></div>
+    <button class="login-btn" onclick="doLogin()">🔑 دخول</button>
+    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غلط</div>
+    <p class="login-hint">admin / 1234</p>
+    <a class="back-store" onclick="backToStore()">← رجوع للمتجر</a>
+  </div>
+</div>
+
+<!-- ════ ADMIN PAGE ════ -->
+<div id="adminPage" class="page">
+  <!-- Mobile Admin Bar -->
+  <div class="mob-adm-bar" id="mobAdmBar">
+    <button class="mob-menu-btn" onclick="toggleMobSidebar()">☰ القائمة</button>
+    <span class="mab-title"><span>Em</span>Boo</span>
+    <button class="mob-logout-btn" onclick="doLogout()">خروج</button>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBd" onclick="closeMobSidebar()"></div>
+
+  <nav class="admin-sidebar" id="adminSidebar">
+    <div class="sb-logo">
+      <a href="#" onclick="return false">
+        <svg class="mini-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="10" fill="rgba(0,212,255,0.1)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+          <rect x="10" y="6" width="11" height="18" rx="2.5" fill="none" stroke="#00d4ff" stroke-width="1.2"/>
+          <rect x="11.5" y="7.5" width="8" height="11" rx="1" fill="rgba(0,212,255,0.15)"/>
+          <circle cx="15.5" cy="21.5" r="1" fill="#00d4ff"/>
+          <path d="M17 11 C18.5 9.5 23 11.5 23 16 C23 20 18.5 23 18.5 23" stroke="#f5a623" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="25" cy="27" r="4" fill="rgba(16,185,129,0.25)" stroke="#10b981" stroke-width="1.2"/>
+          <path d="M23 27 L24.5 28.5 L27 26" stroke="#10b981" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="logo-text"><span class="al">Em</span><span class="doctor">Boo</span></div>
+      </a>
+      <div class="sb-badge">ADMIN</div>
+    </div>
+    <div class="sb-section">الرئيسية</div>
+    <div class="sb-item active" onclick="showAdm('dashboard',this)"><span class="sb-icon">🏠</span> الرئيسية</div>
+    <div class="sb-item" onclick="showAdm('products',this)"><span class="sb-icon">📱</span> الموبايلات</div>
+    <div class="sb-section">الإدارة</div>
+    <div class="sb-item" onclick="showAdm('addProduct',this)"><span class="sb-icon">➕</span> إضافة موبايل</div>
+    <div class="sb-item" onclick="showAdm('sales',this)"><span class="sb-icon">💰</span> المبيعات</div>
+    <div class="sb-item" onclick="showAdm('orders',this)"><span class="sb-icon">📦</span> طلبات العملاء</div>
+    <div class="sb-item" onclick="showAdm('wholesale',this)"><span class="sb-icon">💼</span> طلبات الجملة</div>
+    <div class="sb-section">التقارير</div>
+    <div class="sb-item" onclick="showAdm('reports',this)"><span class="sb-icon">📊</span> الأرباح والتقارير</div>
+    <div class="sb-item" onclick="showAdm('activity',this)"><span class="sb-icon">📋</span> سجل النشاط</div>
+    <div class="sb-item" onclick="showAdm('settings',this)"><span class="sb-icon">⚙️</span> الإعدادات</div>
+    <div class="sb-footer">
+      <div class="sb-user"><div class="avatar">👑</div><div class="uinfo"><div class="name">المالك</div><div class="role">مدير النظام</div></div></div>
+      <button class="logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
+    </div>
+  </nav>
+
+  <main class="admin-main">
+    <!-- DASHBOARD -->
+    <div id="adm-dashboard" class="adm-sec active">
+      <div class="adm-header">
+        <div class="left"><h1>🏠 لوحة التحكم</h1><p id="admDate"></p></div>
+        <button class="btn btn-primary" onclick="showAdm('addProduct',document.querySelector('[onclick*=addProduct]'))">➕ إضافة موبايل</button>
+      </div>
+      <div class="stats-grid" id="admStats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="dash-grid-2">
+        <div class="adm-card"><div class="adm-card-head"><h3>📈 المبيعات - آخر 7 أيام</h3></div><div class="adm-card-body"><div class="bar-chart" id="admChart"></div></div></div>
+        <div class="adm-card"><div class="adm-card-head"><h3>🏷️ توزيع الماركات</h3></div><div class="adm-card-body" id="admBrands"></div></div>
+      </div>
+      <div class="adm-card" style="margin-top:18px"><div class="adm-card-head"><h3>⚡ آخر العمليات</h3></div><div class="adm-card-body" id="admRecent"></div></div>
+    </div>
+
+    <!-- PRODUCTS LIST -->
+    <div id="adm-products" class="adm-sec">
+      <div class="adm-header">
+        <div class="left"><h1>📱 الموبايلات</h1><p>إدارة كل الموبايلات</p></div>
+        <button class="btn btn-primary" onclick="showAdm('addProduct',document.querySelector('[onclick*=addProduct]'))">➕ إضافة موبايل</button>
+      </div>
+      <div class="adm-card">
+        <div class="adm-card-head">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input type="text" style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:9px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;outline:none;min-width:180px;flex:1" id="admSearch" placeholder="🔍 بحث..." oninput="renderAdmProducts()">
+            <select style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:9px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;outline:none" id="admFStatus" onchange="renderAdmProducts()">
+              <option value="">الكل</option><option value="متاح">متاح</option><option value="مباع">مباع</option>
+            </select>
+            <select style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:9px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;outline:none" id="admFBrand" onchange="renderAdmProducts()">
+              <option value="">كل الماركات</option>
+              <option>Samsung</option><option>iPhone</option><option>Huawei</option><option>Realme</option><option>Xiaomi</option><option>Oppo</option><option>Vivo</option><option>أخرى</option>
+            </select>
+          </div>
+        </div>
+        <div class="adm-card-body tbl-wrap">
+          <table><thead><tr><th>#</th><th>الموبايل</th><th>الماركة</th><th>الحالة</th><th>التخزين</th><th>سعر التكلفة 🔒</th><th>سعر البيع</th><th>سعر الجملة 🔒</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+          <tbody id="admProdTable"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD PRODUCT -->
+    <div id="adm-addProduct" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1 id="addFormTitle">➕ إضافة موبايل</h1><p>أدخل بيانات الموبايل الجديد</p></div></div>
+      <div class="adm-card">
+        <div class="adm-card-body">
+          <input type="hidden" id="editId">
+          <div class="cost-note">🔒 سعر التكلفة وسعر الجملة سريّان وظاهرين للمالك فقط</div>
+          <div class="form-row">
+            <div class="form-group"><label>اسم الموبايل</label><input type="text" id="pName" placeholder="مثال: Samsung Galaxy A55"></div>
+            <div class="form-group"><label>الماركة</label><select id="pBrand"><option>Samsung</option><option>iPhone</option><option>Huawei</option><option>Realme</option><option>Xiaomi</option><option>Oppo</option><option>Vivo</option><option>أخرى</option></select></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>الحالة</label><select id="pCondition"><option value="جديد">🆕 جديد</option><option value="مستعمل">♻️ مستعمل</option></select></div>
+            <div class="form-group"><label>التخزين</label><input type="text" id="pStorage" placeholder="128GB"></div>
+            <div class="form-group"><label>الرام</label><input type="text" id="pRam" placeholder="8GB"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>اللون</label><input type="text" id="pColor" placeholder="أسود"></div>
+            <div class="form-group"><label>الحالة</label><select id="pStatus"><option value="متاح">✅ متاح</option><option value="مباع">❌ مباع</option></select></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>💵 سعر التكلفة 🔒</label><input type="number" id="pCostPrice" placeholder="0" min="0"></div>
+            <div class="form-group"><label>💰 سعر البيع للأفراد</label><input type="number" id="pSalePrice" placeholder="0" min="0"></div>
+            <div class="form-group"><label>💼 سعر الجملة 🔒</label><input type="number" id="pWholesalePrice" placeholder="0" min="0"></div>
+          </div>
+          <!-- IMAGE UPLOAD -->
+          <div class="form-group">
+            <label>📸 صور الموبايل (اختياري - يمكن إضافة أكثر من صورة)</label>
+            <div class="img-upload-area" id="imgUploadArea" onclick="document.getElementById('imgFileInput').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+              <input type="file" id="imgFileInput" accept="image/*" multiple onchange="handleImgUpload(event)">
+              <div class="iua-icon">📷</div>
+              <p>اضغط لإضافة صور أو اسحب وأفلت هنا</p>
+              <p style="font-size:11px;margin-top:4px;color:var(--muted)">JPG, PNG, WebP - يمكن اختيار أكثر من صورة</p>
+            </div>
+            <div class="img-preview-grid" id="imgPreviewGrid"></div>
+          </div>
+          <!-- REVIEW LINKS -->
+          <div class="link-fields">
+            <div class="link-field-wrap">
+              <label><span style="color:#ff4444">▶</span> رابط مراجعة يوتيوب</label>
+              <input type="url" id="pYtLink" placeholder="https://youtube.com/watch?v=...">
+            </div>
+            <div class="link-field-wrap">
+              <label><span style="color:#1877f2">f</span> رابط مراجعة فيسبوك</label>
+              <input type="url" id="pFbLink" placeholder="https://facebook.com/...">
+            </div>
+          </div>
+          <div class="form-group"><label>ملاحظات</label><textarea id="pNotes" rows="3" placeholder="معلومات إضافية..."></textarea></div>
+          <div style="display:flex;gap:10px;margin-top:5px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="saveProduct()">💾 حفظ</button>
+            <button class="btn btn-outline" onclick="clearForm()">🗑️ مسح</button>
+          </div>
+          <div id="productAlert"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES -->
+    <div id="adm-sales" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>💰 المبيعات</h1><p>سجل كل عمليات البيع</p></div></div>
+      <div class="adm-card"><div class="adm-card-body tbl-wrap">
+        <table><thead><tr><th>#</th><th>الموبايل</th><th>الماركة</th><th>تاريخ البيع</th><th>سعر البيع</th><th>التكلفة 🔒</th><th>الربح 🔒</th><th>المشتري</th></tr></thead>
+        <tbody id="salesTable"></tbody></table>
+      </div></div>
+    </div>
+
+    <!-- CUSTOMER ORDERS -->
+    <div id="adm-orders" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>📦 طلبات العملاء</h1><p>طلبات الشراء من الموقع</p></div></div>
+      <div class="adm-card"><div class="adm-card-body tbl-wrap">
+        <table><thead><tr><th>#</th><th>العميل</th><th>الهاتف</th><th>الموبايلات</th><th>الإجمالي</th><th>العنوان</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+        <tbody id="ordersTable"></tbody></table>
+      </div></div>
+    </div>
+
+    <!-- WHOLESALE REQUESTS -->
+    <div id="adm-wholesale" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>💼 طلبات الجملة</h1><p>طلبات التجار والبائعين</p></div></div>
+      <div class="adm-card"><div class="adm-card-body tbl-wrap">
+        <table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>المحل</th><th>العدد</th><th>التفاصيل</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+        <tbody id="wholesaleTable"></tbody></table>
+      </div></div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="adm-reports" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>📊 التقارير والأرباح</h1><p>تحليل شامل للأداء المالي</p></div></div>
+      <div class="stats-grid" id="repStats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="dash-grid-2">
+        <div class="adm-card"><div class="adm-card-head"><h3>📦 المخزون حسب الماركة</h3></div><div class="adm-card-body" id="repStock"></div></div>
+        <div class="adm-card"><div class="adm-card-head"><h3>🏆 أكثر الماركات مبيعاً</h3></div><div class="adm-card-body" id="repBrands"></div></div>
+        <div class="adm-card"><div class="adm-card-head"><h3>💸 ملخص الأرباح 🔒</h3></div><div class="adm-card-body" id="repProfit"></div></div>
+        <div class="adm-card"><div class="adm-card-head"><h3>📊 جديد مقابل مستعمل</h3></div><div class="adm-card-body" id="repCondition"></div></div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div id="adm-activity" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>📋 سجل النشاط</h1><p>كل العمليات مسجلة</p></div></div>
+      <div class="adm-card"><div class="adm-card-body" id="activityLog"></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="adm-settings" class="adm-sec">
+      <div class="adm-header"><div class="left"><h1>⚙️ الإعدادات</h1><p>ضبط إعدادات المتجر</p></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="dash-grid-2">
+        <div class="adm-card">
+          <div class="adm-card-head"><h3>🔑 تغيير كلمة المرور</h3></div>
+          <div class="adm-card-body">
+            <div class="form-group"><label>كلمة المرور الحالية</label><input type="password" id="oldPass" placeholder="••••••"></div>
+            <div class="form-group"><label>الجديدة</label><input type="password" id="newPass" placeholder="••••••"></div>
+            <div class="form-group"><label>تأكيد</label><input type="password" id="confPass" placeholder="••••••"></div>
+            <button class="btn btn-primary" onclick="changePass()">💾 حفظ</button>
+            <div id="passAlert"></div>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-head"><h3>🏪 معلومات المتجر</h3></div>
+          <div class="adm-card-body">
+            <div class="form-group"><label>اسم المتجر</label><input type="text" id="sName" value="EmBoo"></div>
+            <div class="form-group"><label>رقم الهاتف</label><input type="text" id="sPhone" placeholder="01xxxxxxxxx"></div>
+            <div class="form-group"><label>واتساب (للتواصل)</label><input type="text" id="sWhatsapp" placeholder="201xxxxxxxxx"></div>
+            <div class="form-group"><label>العنوان</label><input type="text" id="sAddress" placeholder="عنوان المتجر"></div>
+            <div class="form-group"><label>العملة</label>
+              <select id="sCurrency"><option value="ج.م">ج.م</option><option value="$">$</option><option value="ر.س">ر.س</option></select>
+            </div>
+            <div class="form-group"><label>نسبة خصم التجار %</label><input type="number" id="sWholesaleDisc" value="15" min="1" max="50"></div>
+            <button class="btn btn-success" onclick="saveSettings()">💾 حفظ</button>
+            <div id="settingsAlert"></div>
+          </div>
+        </div>
+      </div>
+      <div class="adm-card" style="margin-top:18px">
+        <div class="adm-card-head"><h3>🗑️ إدارة البيانات</h3></div>
+        <div class="adm-card-body">
+          <p style="color:var(--muted);font-size:13px;margin-bottom:15px">حذف كل البيانات. لا يمكن التراجع!</p>
+          <button class="btn btn-danger" onclick="clearAll()">⚠️ مسح كل البيانات</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div><!-- /adminPage -->
+
+<!-- SELL MODAL -->
+<div class="modal-ov" id="sellModal">
+  <div class="modal-box">
+    <div class="modal-head"><h3>💰 تسجيل عملية بيع</h3><button class="modal-close-x" onclick="closeM('sellModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="sell-info-box" id="sellInfoBox"></div>
+      <div class="form-row">
+        <div class="form-group"><label>تاريخ البيع</label><input type="date" id="sDate"></div>
+        <div class="form-group"><label>سعر البيع الفعلي</label><input type="number" id="sActualPrice" placeholder="0"></div>
+      </div>
+      <div class="form-group"><label>اسم المشتري (اختياري)</label><input type="text" id="sBuyer" placeholder="اسم المشتري"></div>
+      <div class="form-group"><label>ملاحظات</label><textarea id="sNotesTxt" rows="2" placeholder="ملاحظات..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeM('sellModal')">إلغاء</button>
+      <button class="btn btn-success" onclick="confirmSale()">✅ تأكيد البيع</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-ov" id="deleteModal">
+  <div class="modal-box" style="max-width:400px">
+    <div class="modal-head"><h3>⚠️ تأكيد الحذف</h3><button class="modal-close-x" onclick="closeM('deleteModal')">✕</button></div>
+    <div class="modal-body"><p style="font-size:14px;color:var(--muted)">هل أنت متأكد من حذف هذا الموبايل؟ لا يمكن التراجع.</p><input type="hidden" id="deleteId"></div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeM('deleteModal')">إلغاء</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">🗑️ حذف</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="{{url_for('static' , filename='script.js')}}"></script>
+
+</body>
+</html>
